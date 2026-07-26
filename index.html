@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Mind First | Black Consciousness | Kula Revise</title>
+<style>
+  :root {
+    --page: #EFE6D6; --card: #FBF7EF; --ink: #1E1A15;
+    --umber: #7A4A28; --deep: #4A331F; --moss: #55603C; --grey: #8B8072;
+    --hair: rgba(30,26,21,0.16);
+    --serif: 'Palatino Linotype','Book Antiqua',Palatino,'Iowan Old Style','Times New Roman',serif;
+    --mono: 'Courier New',Courier,'Nimbus Mono PS',monospace;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; border-radius: 0; }
+  body {
+    min-height: 100vh; background: var(--page);
+    padding: 1.8rem 1rem 3rem; font-family: var(--serif);
+    color: var(--ink); line-height: 1.72; font-size: 17px;
+  }
+  .container { max-width: 700px; margin: 0 auto; }
+  .eyebrow, .chip, .stage-tag, .intro-label, .expl-label, .breakdown-label,
+  .score-label, .essaypanel-label, .qbox .qlabel, .source-attr, .evtag,
+  .top-meta, .btn-primary, .btn-secondary, .scenario-meta, .imgslot, .figure figcaption {
+    font-family: var(--mono);
+  }
+  .top-bar { margin-bottom: 2rem; }
+  .top-meta { display: flex; justify-content: space-between; align-items: baseline; font-size: 0.7rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--umber); margin-bottom: 0.6rem; gap: 1rem; flex-wrap: wrap; }
+  .top-count { color: var(--grey); letter-spacing: 0.08em; text-transform: none; }
+  .track { height: 1px; background: var(--hair); }
+  .fill { height: 100%; background: var(--umber); transition: width 0.45s ease; width: 0%; }
+  .header-block { text-align: left; margin-bottom: 2.4rem; }
+  .eyebrow { font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--umber); margin-bottom: 1rem; }
+  .masthead { font-size: clamp(2rem,5.5vw,3rem); font-weight: normal; line-height: 1.14; letter-spacing: -0.005em; }
+  .sub { font-family: var(--mono); font-size: 0.76rem; color: var(--grey); margin-top: 1rem; letter-spacing: 0.08em; }
+  .rule { width: 100%; height: 1px; background: var(--hair); margin: 1.6rem 0 0; position: relative; }
+  .rule::before { content: ""; position: absolute; left: 0; top: 0; width: 46px; height: 3px; background: var(--umber); }
+  .intro-box { background: transparent; border: none; border-left: 2px solid var(--umber); padding: 0.2rem 0 0.2rem 1.4rem; margin-bottom: 2rem; }
+  .intro-label { font-size: 0.68rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--umber); margin-bottom: 0.7rem; }
+  .intro-text { line-height: 1.8; font-size: 1rem; }
+  .key-row { display: grid; grid-template-columns: repeat(auto-fit,minmax(178px,1fr)); gap: 1rem; margin-bottom: 2.2rem; }
+  .key-item { display: flex; flex-direction: column; gap: 0.55rem; padding: 0; }
+  .chip { display: inline-block; padding: 0.18rem 0.55rem; font-size: 0.66rem; letter-spacing: 0.14em; text-transform: uppercase; width: fit-content; border: 1px solid var(--umber); color: var(--umber); }
+  .chip-argue { border-color: var(--umber); color: var(--umber); }
+  .chip-evidence { border-color: var(--ink); color: var(--ink); }
+  .chip-weigh { background: var(--umber); border-color: var(--umber); color: var(--card); }
+  .chip-instinct { background: var(--ink); border-color: var(--ink); color: var(--page); }
+  .key-desc { font-size: 0.86rem; color: var(--grey); }
+  .card { background: var(--card); border: none; box-shadow: none; border-left: 2px solid var(--hair); padding: 1.8rem 1.5rem 1.9rem; margin-bottom: 1.6rem; }
+  .stage-tag { font-size: 0.68rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--umber); margin-bottom: 1.1rem; }
+  .card h2 { font-size: clamp(1.45rem,4.4vw,1.85rem); font-weight: normal; line-height: 1.22; margin-bottom: 1.1rem; }
+  .card p { font-size: 1rem; line-height: 1.82; margin-bottom: 1rem; }
+  .card p:last-child { margin-bottom: 0; }
+  .pull { border-left: 2px solid var(--umber); padding: 0.1rem 0 0.1rem 1.2rem; margin: 1.4rem 0; color: var(--deep); font-style: italic; }
+  .scenario { background: transparent; border: none; border-top: 1px solid var(--hair); border-bottom: 1px solid var(--hair); padding: 1.3rem 0; margin: 1.3rem 0 0.3rem; font-size: 1.02rem; line-height: 1.82; }
+  .scenario-meta { padding: 0.9rem 0 0; font-size: 0.72rem; color: var(--grey); letter-spacing: 0.09em; text-transform: uppercase; }
+  .source { background: #fff; border: none; box-shadow: none; border-left: 2px solid var(--umber); padding: 1.3rem 1.3rem 1.3rem 1.4rem; margin: 1.6rem 0; transform: none; }
+  .source-attr { font-size: 0.68rem; color: var(--umber); background: transparent; margin: 0 0 1.1rem; padding: 0 0 0.8rem; border-bottom: 1px solid var(--hair); line-height: 1.7; letter-spacing: 0.1em; text-transform: uppercase; }
+  .source-body { font-family: var(--mono); font-size: 0.88rem; line-height: 1.9; }
+  .source-body em { color: var(--deep); font-style: normal; border-bottom: 1px solid var(--umber); }
+  .toggle-btn { background: transparent; border: none; color: var(--umber); cursor: pointer; font-family: var(--mono); font-size: 0.76rem; letter-spacing: 0.08em; text-transform: uppercase; text-decoration: underline; padding: 1rem 0 0; }
+  .toggle-body { display: none; margin-top: 0.9rem; padding-top: 0.9rem; border-top: 1px solid var(--hair); font-size: 0.94rem; color: var(--deep); line-height: 1.78; }
+  .toggle-body.open { display: block; }
+  .evtag { display: inline-block; margin-top: 1.2rem; font-size: 0.66rem; letter-spacing: 0.12em; text-transform: uppercase; padding: 0.2rem 0 0.2rem 0.7rem; border: none; border-left: 2px solid var(--umber); color: var(--grey); }
+  .evtag.home { border-left-color: var(--umber); }
+  .evtag.ground { border-left-color: var(--moss); }
+  .evtag.exit { border-left-color: var(--ink); }
+  .imgslot { margin: 1.2rem 0 0.3rem; padding: 1.5rem 1rem; border: 1px dashed var(--hair); text-align: center; font-size: 0.74rem; color: var(--grey); background: transparent; letter-spacing: 0.05em; }
+  .figure { margin: 1.2rem 0 0.4rem; }
+  .figure img { display: block; height: auto; border: none; margin: 0 auto; }
+  .figure.wide img { width: 100%; max-width: 460px; }
+  .figure.portrait img { width: 100%; max-width: 320px; }
+  .figure figcaption { font-size: 0.72rem; color: var(--grey); margin-top: 0.7rem; line-height: 1.7; text-align: left; }
+  .stencil { display: block; width: 100%; max-width: 250px; margin: 0 0 1.4rem; }
+
+  .q-text { font-size: 1.16rem; line-height: 1.6; margin-bottom: 1.5rem; }
+  .options { display: flex; flex-direction: column; gap: 0.1rem; margin-bottom: 1.4rem; }
+  .option { display: flex; align-items: flex-start; gap: 0.9rem; padding: 0.95rem 1rem 0.95rem 0.9rem; background: transparent; border: none; border-top: 1px solid var(--hair); border-left: 2px solid transparent; cursor: pointer; font-family: var(--serif); text-align: left; font-size: 0.97rem; line-height: 1.65; color: var(--ink); transition: all 0.15s; width: 100%; }
+  .option:last-child { border-bottom: 1px solid var(--hair); }
+  .option:hover:not(:disabled) { background: #fff; border-left-color: var(--hair); }
+  .option:disabled { cursor: default; }
+  .option.selected { background: #fff; border-left-color: var(--umber); }
+  .option.correct { background: #fff; border-left-color: var(--moss); }
+  .option.wrong { background: #fff; border-left-color: var(--umber); color: var(--grey); }
+  .option.dimmed { opacity: 0.42; }
+  .opt-letter { font-family: var(--mono); font-size: 0.8rem; color: var(--umber); min-width: 1.2rem; padding-top: 0.15rem; }
+  .opt-text { flex: 1; }
+  .opt-mark { font-size: 1rem; }
+  .explanation { background: transparent; border: none; border-left: 2px solid var(--umber); padding: 0.2rem 0 0.2rem 1.3rem; margin-bottom: 0.4rem; }
+  .expl-label { font-size: 0.66rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--umber); margin-bottom: 0.6rem; }
+  .expl-text { line-height: 1.8; font-size: 0.95rem; }
+  .skill-callout { background: transparent; border: none; border-top: 1px solid var(--hair); border-bottom: 1px solid var(--hair); padding: 1.1rem 0; margin: 1.3rem 0; }
+  .skill-list { margin: 0.6rem 0 0 0; padding-left: 0; list-style: none; }
+  .skill-list li { font-size: 0.94rem; line-height: 1.75; margin-bottom: 0.5rem; padding-left: 1.2rem; position: relative; }
+  .skill-list li::before { content: "\203A"; position: absolute; left: 0; color: var(--umber); font-family: var(--mono); }
+
+  .nav { display: flex; justify-content: space-between; gap: 0.8rem; margin-top: 0.6rem; }
+  .btn-secondary { padding: 0.75rem 0; background: transparent; border: none; color: var(--grey); font-size: 0.72rem; cursor: pointer; letter-spacing: 0.14em; text-transform: uppercase; }
+  .btn-secondary:hover:not(:disabled) { color: var(--ink); }
+  .btn-secondary:disabled { opacity: 0.3; cursor: not-allowed; }
+  .btn-primary { padding: 0.8rem 1.6rem; background: var(--ink); border: none; color: var(--page); font-size: 0.72rem; cursor: pointer; letter-spacing: 0.14em; text-transform: uppercase; }
+  .btn-primary:hover:not(:disabled) { background: var(--umber); }
+  .btn-primary:disabled { opacity: 0.28; cursor: not-allowed; }
+  .btn-start { width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: 1.3rem 1.4rem; background: var(--card); color: var(--ink); border: none; border-left: 3px solid var(--umber); cursor: pointer; font-family: var(--serif); text-align: left; transition: all 0.2s; }
+  .btn-start:hover { background: #fff; padding-left: 1.7rem; }
+  .btn-start .st { font-size: 1.06rem; }
+  .btn-start .sa { font-size: 1.2rem; color: var(--umber); }
+  .score-row { display: grid; grid-template-columns: repeat(auto-fit,minmax(122px,1fr)); gap: 1.4rem; margin-bottom: 1.8rem; }
+  .score-block { background: transparent; border: none; border-top: 1px solid var(--hair); padding: 1rem 0 0; text-align: left; }
+  .score-num { font-size: 2.5rem; font-weight: normal; color: var(--ink); line-height: 1; }
+  .score-num.red { color: var(--umber); }
+  .score-den { font-size: 1rem; color: var(--grey); }
+  .score-label { font-size: 0.64rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--grey); margin-top: 0.7rem; }
+  .grade-desc { text-align: left; margin-bottom: 2rem; line-height: 1.8; font-style: italic; color: var(--deep); }
+  .breakdown { background: transparent; border: none; border-top: 1px solid var(--hair); border-bottom: 1px solid var(--hair); padding: 1.4rem 0; margin-bottom: 1.8rem; }
+  .breakdown-label { font-size: 0.66rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--umber); margin-bottom: 1.2rem; text-align: left; }
+  .bd-row { display: grid; grid-template-columns: 1fr 110px 46px; gap: 0.8rem; align-items: center; margin-bottom: 0.85rem; font-size: 0.9rem; }
+  .bd-name { font-family: var(--mono); font-size: 0.78rem; letter-spacing: 0.06em; }
+  .bd-bar { height: 1px; background: var(--hair); }
+  .bd-fill { height: 3px; margin-top: -1px; background: var(--umber); transition: width 0.45s; }
+  .bd-score { font-family: var(--mono); font-size: 0.78rem; color: var(--grey); text-align: right; }
+  .essaypanel { background: #fff; border: none; border-left: 2px solid var(--moss); padding: 1.3rem 1.3rem 1.3rem 1.4rem; margin-top: 1.5rem; }
+  .essaypanel-label { font-size: 0.66rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--moss); margin-bottom: 0.9rem; display: flex; align-items: center; gap: 0.5rem; }
+  .essaypanel-label .tick { color: var(--moss); font-size: 0.8rem; }
+  .essaypanel p { font-size: 0.94rem; line-height: 1.82; margin-bottom: 0.8rem; text-indent: 1.2rem; }
+  .essaypanel p:first-of-type { text-indent: 0; }
+  .essaypanel p:last-child { margin-bottom: 0; }
+  .finalessay { background: #fff; border: none; border-left: 2px solid var(--ink); padding: 1.7rem 1.5rem; margin: 1.4rem 0; }
+  .finalessay .fq { font-family: var(--mono); color: var(--umber); font-size: 0.82rem; line-height: 1.8; margin-bottom: 1.3rem; padding-bottom: 1.1rem; border-bottom: 1px solid var(--hair); }
+  .finalessay p { font-size: 0.98rem; line-height: 1.86; margin-bottom: 1rem; text-indent: 1.3rem; }
+  .finalessay p:first-of-type { text-indent: 0; }
+  .finalessay p:last-child { margin-bottom: 0; }
+  .qbox { background: transparent; border: none; border-left: 2px solid var(--umber); padding: 0.2rem 0 0.2rem 1.3rem; margin: 1.5rem 0 1.7rem; }
+  .qbox .qlabel { font-size: 0.66rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--umber); margin-bottom: 0.7rem; }
+  .qbox .qtext { font-size: 1.04rem; line-height: 1.75; font-style: italic; }
+  .hidden { display: none !important; }
+  .footer { text-align: left; font-family: var(--mono); font-size: 0.7rem; color: var(--grey); margin-top: 2.4rem; padding-top: 1.4rem; border-top: 1px solid var(--hair); line-height: 1.85; letter-spacing: 0.04em; }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <div class="top-bar hidden" id="top-bar">
+    <div class="top-meta"><span id="stage-name">Black Consciousness</span><span class="top-count" id="step-count">Step 1</span></div>
+    <div class="track"><div class="fill" id="fill"></div></div>
+  </div>
+
+  <div id="start-screen">
+    <div class="header-block">
+      <svg class="stencil" viewBox="0 0 250 96" xmlns="http://www.w3.org/2000/svg" role="presentation" aria-hidden="true">
+        <rect x="0" y="0" width="2" height="96" fill="#7A4A28"/>
+        <rect x="18" y="10" width="150" height="3" fill="#1E1A15"/>
+        <rect x="18" y="24" width="196" height="3" fill="#1E1A15"/>
+        <rect x="18" y="38" width="118" height="3" fill="#1E1A15"/>
+        <rect x="18" y="52" width="176" height="3" fill="#1E1A15"/>
+        <rect x="14" y="49" width="130" height="1" fill="#7A4A28"/>
+        <rect x="18" y="66" width="88" height="3" fill="#1E1A15"/>
+        <rect x="18" y="80" width="204" height="3" fill="#1E1A15"/>
+      </svg>
+      <div class="eyebrow">Kula Revise &middot; Grade 12 History &middot; Civil Resistance</div>
+      <h1 class="masthead">The Mind First</h1>
+      <div class="sub">South Africa, 1969 to 1972 &middot; Lesson 2 of 5</div>
+      <div class="rule"></div>
+    </div>
+    <div class="intro-box">
+      <div class="intro-label">Where we are</div>
+      <p class="intro-text">In Lesson 1 you argued that political liberation was a real aim of Black Consciousness. Now you test the word that carries the marks. This lesson puts three people in front of the same movement in the early 1970s: Steve Biko, a white liberal opponent of apartheid, and a government official. They see three different things, and only one of them turns out to be right.</p>
+    </div>
+    <div class="key-row">
+      <div class="key-item"><span class="chip chip-argue">Argue</span><span class="key-desc">Take a clear line of argument</span></div>
+      <div class="key-item"><span class="chip chip-evidence">Evidence</span><span class="key-desc">Back the case with specific facts</span></div>
+      <div class="key-item"><span class="chip chip-weigh">Weigh</span><span class="key-desc">Judge it, and say how far you agree</span></div>
+    </div>
+    <button class="btn-start" id="begin-btn"><span class="st">Start with the argument</span><span class="sa">&rarr;</span></button>
+    <div class="footer">About 20 minutes. Six marked questions. You finish holding the second move of your essay argument.</div>
+  </div>
+
+  <div id="flow-screen" class="hidden">
+    <div class="card" id="flow-card"></div>
+    <div class="nav">
+      <button class="btn-secondary" id="back-btn">&larr; Back</button>
+      <button class="btn-primary" id="next-btn">Continue &rarr;</button>
+    </div>
+  </div>
+
+  <div id="results-screen" class="hidden">
+    <div class="header-block">
+      <div class="eyebrow">Lesson 2 complete</div>
+      <h1 class="masthead" style="font-size: clamp(1.9rem,6vw,3rem);">Where you stand</h1>
+      <div class="rule"></div>
+    </div>
+    <div class="score-row">
+      <div class="score-block"><div class="score-num"><span id="r-correct">0</span><span class="score-den">/<span id="r-total">0</span></span></div><div class="score-label">Argument moves</div></div>
+      <div class="score-block"><div class="score-num"><span id="r-pct">0</span><span class="score-den">%</span></div><div class="score-label">Accuracy</div></div>
+      <div class="score-block"><div class="score-num red" id="r-band">-</div><div class="score-label">Standard</div></div>
+    </div>
+    <div class="grade-desc" id="r-desc"></div>
+    <div class="breakdown"><div class="breakdown-label">By essay skill</div><div id="r-breakdown"></div></div>
+    <div class="card">
+      <div class="stage-tag">The argument so far</div>
+      <p>Two moves on the board now, and the second one is the one that starts to break the statement open:</p><p class="pull">1. Political liberation was one focus of Black Consciousness, because after 1960 black South Africans had no legal party, no vote and no citizenship.<br><br>2. But the movement's starting diagnosis was psychological, not political: Biko argued that liberation had to begin in the mind of the oppressed.</p><p>A marker will still ask what the movement actually did about it. Lesson 3 is the answer.</p>
+    </div>
+    <div class="nav" style="justify-content: center;"><button class="btn-primary" id="redo-btn">&#8635; Restart lesson</button></div>
+    <div class="footer">Next: Lesson 3, Building What the State Would Not. Clinics, trust funds, unions and a newspaper.</div>
+  </div>
+</div>
+
+<script>
+const BANDS = [
+  {
+    "min": 85,
+    "band": "7",
+    "desc": "Top band. You are holding a line of argument while giving the other side its best case, which is precisely what 'critically discuss' asks for. Straight on to Lesson 3."
+  },
+  {
+    "min": 72,
+    "band": "6",
+    "desc": "Strong work. Go back over anything you missed on the Weigh questions, because this lesson is where the essay stops agreeing with the statement and the reasoning has to be exact."
+  },
+  {
+    "min": 58,
+    "band": "5",
+    "desc": "Solid. The usual gap here is confusing what Black Consciousness believed with what it did. The belief is Lesson 2, the doing is Lesson 3, and the essay needs both."
+  },
+  {
+    "min": 44,
+    "band": "4",
+    "desc": "The content is landing but the argument is not. Reread the explanations and watch how the correct sentence always gives a reason rather than a fact on its own."
+  },
+  {
+    "min": 30,
+    "band": "3",
+    "desc": "Restart the lesson. The psychological argument is the hinge of this whole essay, and if it is shaky here it will be shaky in the capstone."
+  },
+  {
+    "min": 0,
+    "band": "2",
+    "desc": "Restart and read every explanation, including on questions you got right. Then go back to Lesson 1 if the first move no longer feels solid."
+  }
+];
+
+const FLOW = [
+  {
+    "type": "narrative",
+    "stage": "Recognise",
+    "html": "<div class=\"stage-tag\">Something you already know</div><h2>The verdict you carry</h2><div class=\"scenario\">Somebody in your life has been telling you for years, casually and without malice, that you are not the clever one in the family. Not as an insult. Just as a fact everybody has agreed on.<br><br>Then a chance comes up that you would actually be good at. And you hear yourself say, out loud, that you are not the type.</div><div class=\"scenario-meta\">Two questions. Neither is scored.</div>"
+  },
+  {
+    "type": "question",
+    "stage": "Recognise",
+    "kind": "everyday",
+    "q": "Whose verdict just stopped you from putting your name forward?",
+    "options": [
+      "Yours, but you did not write it, you only agreed to keep it.",
+      "Theirs, because they are the ones who said it in the first place.",
+      "Nobody's, because you were simply being honest about your limits.",
+      "The people running the opportunity, since they set the standard."
+    ],
+    "correct": 0,
+    "explanation": "This is the uncomfortable one and it is the reason the lesson exists. The verdict came from outside, but by the time it stops you it is being enforced from inside, in your own voice, with no one else in the room. Blaming only the people who said it misses how the thing works. Calling it honesty is the verdict talking. That handover, from their judgement to yours, is exactly what Steve Biko spent the early 1970s writing about."
+  },
+  {
+    "type": "question",
+    "stage": "Recognise",
+    "kind": "everyday",
+    "q": "Someone now changes the rules so that the chance is formally open to you. Does that fix it?",
+    "options": [
+      "No, because the rule was never the only thing keeping you out.",
+      "Yes, because an open door is all that anybody ever really needs.",
+      "No, and it never could, since opportunities of this kind are always rigged.",
+      "Yes, as long as somebody else agrees to put your name forward for you."
+    ],
+    "correct": 0,
+    "explanation": "Removing the barrier is not the same as removing the belief, and that gap is the whole argument you are about to meet. The 'open door is enough' answer is the one most people give, and it is the reason the argument had to be made at all. The blanket cynicism answer sounds tougher but gives up. And having somebody else put your name forward simply moves the problem: you are back to being spoken for, which is where Lesson 1 started."
+  },
+  {
+    "type": "narrative",
+    "stage": "Destabilise",
+    "html": "<div class=\"stage-tag\">The turn</div><h2>You argued that the door is not the problem</h2><p>You did not say the rule was irrelevant. You said something more precise: that changing the rule leaves the belief in place, and the belief is doing the work.</p><p>Now apply that to a country. Suppose black South Africans did somehow win the vote tomorrow, after three centuries of being told what they were. Biko's argument was that they would walk into that parliament already carrying somebody else's verdict on them.</p><p class=\"pull\">Which is why he insisted that liberation had to start somewhere other than parliament.</p>"
+  },
+  {
+    "type": "narrative",
+    "stage": "Act",
+    "html": "<div class=\"stage-tag\">The evidence</div><h2>Where the idea came from</h2><p>Biko was born in Tarkastad in 1946 and grew up in Ginsberg, a township outside King William's Town. He studied medicine at the University of Natal. He read Frantz Fanon, a writer from Martinique who had worked through the French war in Algeria. In <em>The Wretched of the Earth</em>, Fanon examined what colonial rule does to colonised people, and he did not stop at the economic damage. He described a psychological injury: the colonised come to see themselves through the coloniser's eyes.</p><p>Biko took that and applied it to South Africa. Centuries of colonialism, then apartheid, had left black South Africans in a psychological state of being treated as, and expecting to be treated as, inferior. Until that was broken, he argued, political power would not do what people hoped it would do.</p>"
+  },
+  {
+    "type": "source",
+    "stage": "Act",
+    "html": "<div class=\"stage-tag\">The evidence</div><h2>In his own words</h2>",
+    "source": {
+      "attr": "Source A &middot; Steve Biko, writing as Frank Talk, collected in I Write What I Like, published 1978",
+      "body": "Biko defines Black Consciousness as <em>an attitude of the mind and a way of life</em>. He describes it as a call for black people to recognise the need to rally around the fact of their oppression and to operate as a group in order to shake off what he calls a perpetual servitude. Elsewhere he argues that the first step is to make the black man come to himself: to restore pride and dignity, and to remind him of his own part in allowing himself to be used.",
+      "evidence": {
+        "cls": "home",
+        "label": "Evidence &middot; the diagnosis"
+      },
+      "toggle": "The hardest sentence there is the last one. Biko is telling the oppressed that they hold part of the responsibility, which sounds cruel until you see what it is doing: if the injury were purely external then nothing could be done from the inside, and there would be nothing to organise. Locating part of it inside is what makes self-liberation possible."
+    }
+  },
+  {
+    "type": "question",
+    "stage": "Act",
+    "level": "Evidence",
+    "q": "Which piece of evidence best supports the claim that Black Consciousness diagnosed a psychological problem first?",
+    "options": [
+      "Biko called Black Consciousness an attitude of mind and a way of life.",
+      "Biko studied medicine at the University of Natal before entering student politics.",
+      "SASO organised at segregated universities such as Turfloop and the University of Zululand.",
+      "Biko was influenced by Frantz Fanon, a writer well known outside South Africa."
+    ],
+    "correct": 0,
+    "explanation": "Only the first option is evidence of a diagnosis. It says what Black Consciousness was, in the movement's own terms, and 'attitude of the mind' is doing the work. Biko's medical training and SASO's campus base are true facts about the movement that support nothing in particular. The Fanon point is the interesting trap: an influence tells you where an idea came from, not what the idea claims, so on its own it cannot support this claim. Watch for that in your own essays."
+  },
+  {
+    "type": "narrative",
+    "stage": "Act",
+    "html": "<div class=\"stage-tag\">The evidence</div><h2>Three people, one movement</h2><p>By about 1971 you could put three people in a room, show them the same organisation, and get three completely different readings of it.</p><p>The first is Biko himself. The second is a white liberal who genuinely opposes apartheid and is watching black students walk out of the shared platform. The third is a government official, whose job is to work out whether this needs to be stopped.</p><p>You are about to hear all three. Only one of them turns out to have read it correctly, and it is not the one you would expect.</p>"
+  },
+  {
+    "type": "source",
+    "stage": "Act",
+    "html": "<div class=\"stage-tag\">Perspective two</div><h2>The charge of being anti-white</h2><p>When black students broke away, they were accused of racism in reverse. Biko answered the charge directly, and his answer is a piece of political reasoning rather than an insult.</p>",
+    "source": {
+      "attr": "Source B &middot; Steve Biko, explaining the decision not to include white students, quoted in A Leas, Questions of Today: South Africa: Reform and Revolution",
+      "body": "Biko argues that white students cannot be both the oppressors and partners in liberation at the same time. There is, he says, <em>no such thing as a poor white</em>: the law, the vote, job protection and welfare all run in their favour. A white sympathiser can move into black politics and can also move back out again whenever it suits. Black South Africans have no such exit, and that difference is why the two groups cannot organise as equals.",
+      "evidence": {
+        "cls": "ground",
+        "label": "Evidence &middot; the reply to the liberals"
+      },
+      "toggle": "The argument turns on who can leave. Biko is not claiming white opponents of apartheid were insincere. He is claiming they had an escape route and that this changed what they could be relied on for. Note also what he does not say: he does not say white people should be driven out of the country, and he never called for revenge. He described Black Consciousness as a way of building pride, not as black racism."
+    }
+  },
+  {
+    "type": "question",
+    "stage": "Act",
+    "kind": "reveal",
+    "q": "One of the three readings was that Black Consciousness was basically harmless and could be left alone. Whose?",
+    "options": [
+      "The government official's, at least in the first few years.",
+      "The white liberal's, because it was not aimed at whites.",
+      "Nobody's, since every one of them saw the danger at once.",
+      "Biko's own, because he described it as a philosophy."
+    ],
+    "correct": 0,
+    "explanation": "Not scored, but remember it. The apartheid government's first response to Black Consciousness was relatively positive. Officials thought that black separateness and a distinctive black culture fitted rather neatly with separate development, and they judged the movement to be philosophical, with no direct political impact. The ANC, from exile, initially thought something similar: that Black Consciousness would have limited ability to organise real resistance. Two sworn enemies made the same mistake for opposite reasons."
+  },
+  {
+    "type": "narrative",
+    "stage": "Act",
+    "html": "<div class=\"stage-tag\">The evidence</div><h2>Why both of them misread it</h2><p>The government read the movement as talk. Talk about pride, identity and self-respect looked to them like culture, and culture could be tolerated, even encouraged, if it kept people looking inward.</p><p>The ANC, whose non-racial position was reaffirmed at its conference in Tanzania in 1969, saw a movement that contradicted its own principles and lacked the structures to mount a serious challenge. There were still enough similarities for the two to set up secret links in the early 1970s.</p><p>Both were reading a philosophy. Neither noticed that a movement which tells hundreds of thousands of young people they are worth something is not a philosophy. It is a recruiting method.</p>"
+  },
+  {
+    "type": "question",
+    "stage": "Act",
+    "level": "Weigh",
+    "q": "How much weight can the government's early tolerance of Black Consciousness carry in your essay?",
+    "options": [
+      "Real weight: the state itself first judged the movement to be non-political.",
+      "None, because the government was simply lying about what it actually believed.",
+      "None at all, since what an enemy of a movement thinks can never be evidence.",
+      "Total weight: if the state said it was not political, then it was not."
+    ],
+    "correct": 0,
+    "explanation": "This is a Weigh question because it asks how far a piece of evidence stretches, and the answer is: some way, but not the whole way. The state's early reading is genuinely useful, because an enemy conceding something against its own interest is strong evidence. What it cannot do is settle the matter, because the state later changed its mind and banned the movement, which tells you the first reading was wrong. Notice that two of the wrong answers throw the evidence away entirely and one treats it as final. Both are the same error in opposite directions."
+  },
+  {
+    "type": "question",
+    "stage": "Act",
+    "level": "Evidence",
+    "q": "You want to show that Black Consciousness aimed at more than a change of government. Which fact does that job best?",
+    "options": [
+      "It set out to remove the inferiority complex and instil pride and self-reliance.",
+      "It rejected the government's term 'non-white' in favour of the word 'black'.",
+      "Its leaders were students at universities like Turfloop and the University of Zululand.",
+      "The ANC in exile reaffirmed its non-racial position at a conference in 1969."
+    ],
+    "correct": 0,
+    "explanation": "The first option names an aim that no election could deliver, which is exactly the job the question sets. Rejecting 'non-white' is good supporting evidence but it is a symptom of the aim rather than the aim itself, so on its own it is weaker. The other two are true and irrelevant: where the leaders studied says nothing about the movement's aims, and the ANC's position tells you about the ANC. Choosing the fact that fits the claim, rather than the fact you remember best, is most of what 'relevant evidence' actually means when your answer is marked."
+  },
+  {
+    "type": "question",
+    "stage": "Act",
+    "level": "Weigh",
+    "q": "How far should your essay go on the psychological argument at this point?",
+    "options": [
+      "Far enough to say it was the starting point, not that it replaced politics.",
+      "All the way: the movement was psychological, so the political claim collapses.",
+      "Not far, because ideas about pride cannot really be counted as historical evidence.",
+      "Not far at all, since Biko himself never claimed politics mattered to the movement."
+    ],
+    "correct": 0,
+    "explanation": "A 'critically discuss' answer is judged on control. The evidence shows a psychological starting point sitting alongside political aims, so claiming it replaced politics overshoots and contradicts the sentence you committed to in Lesson 1. Refusing to count ideas as evidence would gut the essay, since the question asks specifically about philosophy. The last option is simply false, and a marker will score it as a wrong statement. Saying exactly as much as your evidence supports, and no more, is what lifts a strong essay above a confident one."
+  },
+  {
+    "type": "question",
+    "stage": "Act",
+    "level": "Argue",
+    "q": "Which sentence turns the Fanon connection into an argument rather than a fact?",
+    "options": [
+      "Because Fanon showed colonialism injures the mind, Biko began there rather than parliament.",
+      "Biko read Frantz Fanon, whose best known book is The Wretched of the Earth.",
+      "Fanon wrote about Algeria and Biko wrote about South Africa in the 1970s.",
+      "Fanon proves Black Consciousness was a foreign idea with no South African roots."
+    ],
+    "correct": 0,
+    "explanation": "The first option uses the influence to explain a decision, which is what an argument does: it connects a fact to a claim with the word 'because'. The two descriptive options are both accurate and both dead on the page, and this is the answer markers call descriptive: full of facts, going nowhere. The last one takes a line you cannot defend and that the evidence contradicts: Biko applied Fanon to conditions he knew at first hand, and the movement grew out of South African universities."
+  },
+  {
+    "type": "question",
+    "stage": "Act",
+    "build": true,
+    "part": "The movement's starting diagnosis, however, was not political but psychological. Drawing on Frantz Fanon's account of the damage colonialism does to the mind of the colonised, Steve Biko argued that centuries of colonial rule and apartheid had persuaded black South Africans of their own inferiority, and that no political settlement could mean very much until that belief was broken. Black Consciousness therefore set out to instil pride, self-reliance and a sense of identity, rejecting the label 'non-white' along with the self-pity and self-alienation it carried. Significantly, the apartheid state itself at first judged the movement to be philosophical and without direct political impact.",
+    "q": "Decision two. Add the next move to your argument. Which sentence takes the essay forward?",
+    "level": "Argue",
+    "options": [
+      "The movement's starting diagnosis was psychological, not political: Biko argued that liberation had to begin in the mind.",
+      "Biko read Fanon, wrote as Frank Talk, and described Black Consciousness as an attitude of the mind and a way of life.",
+      "Black Consciousness was purely a philosophy of pride, which is why it never developed any political aims at all."
+    ],
+    "correct": 0,
+    "explanation": "The first option adds a second front to your argument without knocking over the first, which is how a line of argument is sustained rather than abandoned. The second is an accurate summary of the lesson and it makes no claim at all, so a marker reads it as story-telling, not argument. The third is the trap that ruins otherwise good essays on this question: it goes further than the evidence, and it contradicts the political aims you established in Lesson 1. Your case is that the statement is too narrow, not that the opposite statement is true."
+  },
+  {
+    "type": "narrative",
+    "stage": "Transfer",
+    "html": "<div class=\"stage-tag\">Beyond the exam</div><h2>Two enemies, one mistake</h2><p>The exam move you made here is worth naming: you took a piece of evidence that helps the other side, the state's early tolerance, and you used it anyway, on your own terms. Weak essays hide inconvenient evidence. Strong ones put it on the table and explain it.</p><p>The other thing worth keeping is what the government and the ANC both got wrong. They looked at a movement that was changing how people saw themselves and filed it under talk. Almost nobody takes a change in belief seriously until it produces something you can photograph. It usually does.</p>"
+  }
+];
+
+const DIFF = {
+  Argue:{ label:"Argue &middot; line of argument", cls:"chip-argue" },
+  Evidence:{ label:"Evidence &middot; back it up", cls:"chip-evidence" },
+  Weigh:{ label:"Weigh &middot; how far do you agree", cls:"chip-weigh" }
+};
+const KIND = {
+  everyday:{ label:"Your instinct", cls:"chip-instinct" },
+  reveal:{ label:"Plot twist", cls:"chip-instinct" },
+  decision:{ label:"Your call", cls:"chip-instinct" },
+  chain:{ label:"Next link", cls:"chip-instinct" }
+};
+const LEVELS = ["Argue","Evidence","Weigh"];
+
+const state = { idx:0, answers:{}, revealed:{}, order:{} };
+const questionIds = FLOW.map((f,i)=>f.type==="question"?i:null).filter(i=>i!==null);
+const assessedIds = FLOW.map((f,i)=>(f.type==="question"&&f.level)?i:null).filter(i=>i!==null);
+const buildIds = FLOW.map((f,i)=>f.build?i:null).filter(i=>i!==null);
+const totalQ = assessedIds.length;
+
+const startScreen=document.getElementById("start-screen");
+const flowScreen=document.getElementById("flow-screen");
+const resultsScreen=document.getElementById("results-screen");
+const topBar=document.getElementById("top-bar");
+const card=document.getElementById("flow-card");
+const backBtn=document.getElementById("back-btn");
+const nextBtn=document.getElementById("next-btn");
+
+document.getElementById("begin-btn").addEventListener("click",()=>{
+  startScreen.classList.add("hidden"); flowScreen.classList.remove("hidden"); topBar.classList.remove("hidden"); render();
+});
+backBtn.addEventListener("click",()=>{ if(state.idx>0){state.idx--;render();} });
+nextBtn.addEventListener("click",()=>{ if(state.idx<FLOW.length-1){state.idx++;render();} else {showResults();} });
+document.getElementById("redo-btn").addEventListener("click",()=>location.reload());
+
+function render(){
+  const item=FLOW[state.idx];
+  document.getElementById("step-count").textContent=`Step ${state.idx+1} of ${FLOW.length}`;
+  document.getElementById("fill").style.width=((state.idx+1)/FLOW.length*100)+"%";
+  backBtn.disabled=state.idx===0;
+  if(item.type==="question") renderQuestion(item);
+  else if(item.type==="essay") renderEssay();
+  else if(item.type==="source") renderSource(item);
+  else renderStatic(item);
+  nextBtn.disabled = item.type==="question" ? !state.revealed[state.idx] : false;
+  nextBtn.innerHTML = state.idx===FLOW.length-1 ? "See results &rarr;" : "Continue &rarr;";
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+
+function essayParts(uptoIdx){
+  return buildIds.filter(i=>i<=uptoIdx && state.revealed[i]).map(i=>FLOW[i].part);
+}
+function renderEssay(){
+  const parts=buildIds.map(i=>FLOW[i].part);
+  card.innerHTML=`<div class="stage-tag">${ESSAY_SCREEN.label}</div><h2>${ESSAY_SCREEN.heading}</h2>
+    <p>${ESSAY_SCREEN.intro}</p>
+    <div class="finalessay"><div class="fq">${QUESTION}</div>${parts.map(p=>`<p>${p}</p>`).join("")}</div>
+    <p style="margin-top:1.1rem;color:var(--fade);">${ESSAY_SCREEN.outro}</p>`;
+}
+function renderStatic(item){ card.innerHTML=item.html; bindToggles(); }
+function renderSource(item){
+  let html=item.html;
+  if(item.source){
+    const s=item.source;
+    const ev = s.evidence ? `<span class="evtag ${s.evidence.cls}">${s.evidence.label}</span>` : "";
+    html+=`<div class="source"><div class="source-attr">${s.attr}</div>
+      <div class="source-body">${s.body}</div>${ev}
+      <div><button class="toggle-btn" data-toggle>What does this actually mean?</button></div>
+      <div class="toggle-body" data-toggle-body>${s.toggle}</div></div>`;
+  }
+  card.innerHTML=html;
+  bindToggles();
+}
+function bindToggles(){
+  card.querySelectorAll("[data-toggle]").forEach(btn=>{
+    btn.addEventListener("click",()=>{
+      const body=btn.closest(".source").querySelector("[data-toggle-body]");
+      body.classList.toggle("open");
+      btn.textContent=body.classList.contains("open")?"Hide":"What does this actually mean?";
+    });
+  });
+}
+function renderQuestion(item){
+  const gi=state.idx;
+  if(!state.order[gi]){
+    const arr=item.options.map((_,i)=>i);
+    for(let i=arr.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); const t=arr[i]; arr[i]=arr[j]; arr[j]=t; }
+    state.order[gi]=arr;
+  }
+  const order=state.order[gi];
+  const revealed=state.revealed[gi];
+  const selected=state.answers[gi];
+  const tag = item.level ? DIFF[item.level] : KIND[item.kind];
+  let optsHtml="";
+  order.forEach((orig,pos)=>{
+    let cls="option"; let mark="";
+    if(revealed){
+      if(orig===item.correct){cls+=" correct"; mark='<span class="opt-mark">&#10003;</span>';}
+      else if(orig===selected){cls+=" wrong"; mark='<span class="opt-mark">&#10007;</span>';}
+      else cls+=" dimmed";
+    } else if(orig===selected) cls+=" selected";
+    optsHtml+=`<button class="${cls}" data-opt="${orig}" ${revealed?"disabled":""}>
+      <span class="opt-letter">${String.fromCharCode(65+pos)}</span>
+      <span class="opt-text">${item.options[orig]}</span>${mark}</button>`;
+  });
+  const explLabel = item.level ? "Why" : "What that shows";
+  let panel="";
+  if(revealed && item.build){
+    panel=`<div class="essaypanel"><div class="essaypanel-label"><span class="tick">&#10003;</span> Added to your essay</div>`
+      + essayParts(gi).map(p=>`<p>${p}</p>`).join("") + `</div>`;
+  }
+  card.innerHTML=`<div class="stage-tag"><span class="chip ${tag.cls}">${tag.label}</span></div>
+    <div class="q-text">${item.q}</div><div class="options">${optsHtml}</div>
+    ${revealed?`<div class="explanation"><div class="expl-label">${explLabel}</div><div class="expl-text">${item.explanation}</div></div>`:""}
+    ${panel}`;
+  if(!revealed){
+    card.querySelectorAll("[data-opt]").forEach(b=>{
+      b.addEventListener("click",()=>{ state.answers[gi]=parseInt(b.dataset.opt); state.revealed[gi]=true; render(); });
+    });
+  }
+}
+function showResults(){
+  flowScreen.classList.add("hidden"); topBar.classList.add("hidden"); resultsScreen.classList.remove("hidden");
+  let correct=0;
+  assessedIds.forEach(i=>{ if(state.answers[i]===FLOW[i].correct) correct++; });
+  const pct=totalQ?Math.round((correct/totalQ)*100):0;
+  let band="-",desc="";
+  for(const b of BANDS){ if(pct>=b.min){ band=b.band; desc=b.desc; break; } }
+  document.getElementById("r-correct").textContent=correct;
+  document.getElementById("r-total").textContent=totalQ;
+  document.getElementById("r-pct").textContent=pct;
+  document.getElementById("r-band").textContent=band;
+  document.getElementById("r-desc").textContent=desc;
+  const bd=document.getElementById("r-breakdown"); bd.innerHTML="";
+  LEVELS.forEach(level=>{
+    const ids=assessedIds.filter(i=>FLOW[i].level===level);
+    const got=ids.filter(i=>state.answers[i]===FLOW[i].correct).length;
+    const p=ids.length?Math.round(got/ids.length*100):0;
+    bd.innerHTML+=`<div class="bd-row"><div class="bd-name">${level}</div>
+      <div class="bd-bar"><div class="bd-fill" style="width:${p}%"></div></div>
+      <div class="bd-score">${got}/${ids.length}</div></div>`;
+  });
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+</script>
+</body>
+</html>
