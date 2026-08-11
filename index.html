@@ -265,6 +265,8 @@ body:not(.bright) .btn-primary .sa, body:not(.bright) #next-btn .sa, body:not(.b
 </style>
 </head>
 <body>
+<script>/* kula: LMS embed events. "completed" fires once, when the learner reaches the closing screen. "advance" fires from the final button. */
+(function(){var sentCompleted=false;window.kulaEmbed=function(ev){if(ev==="completed"){if(sentCompleted)return;sentCompleted=true;}try{window.parent.postMessage({type:"lms-embed-event",version:"1.0",payload:{event:ev}},"*");}catch(e){}};})();</script>
 <div class="container">
   <div class="top-bar hidden" id="top-bar">
     <div class="top-meta"><span id="lesson-tag">Kula Revise &middot; Grade 12 History &middot; Black Consciousness</span><span class="top-count" id="step-count"></span></div>
@@ -293,7 +295,7 @@ const RESULTS = {
   "eyebrow": "Lesson 2 report",
   "title": "Where You Stand",
   "bands": {
-    "excellent": "The philosophy is secure and you can name where each part of it came from. Go to Lesson 3.",
+    "excellent": "The philosophy is secure and you can name where each part of it came from. Continue to Lesson 3.",
     "strong": "Nearly there. The four aims and the four influences are the two lists worth checking again.",
     "solid": "The idea is clear and the detail is loose. Go back over the aims and the influences.",
     "patchy": "Worth another pass. Lesson 3 assumes you can say what the movement was trying to do.",
@@ -653,7 +655,7 @@ const FLOW = [
     "explanation": "{opt0} names the claim and then names what follows from it, so the facts hang on a reason. {opt1} is an accurate summary that argues nothing. {opt2} is not true: SASO, SASM and the BPC were all built on this philosophy.",
     "level": "Argue",
     "build": true,
-    "part": "At its heart Black Consciousness was a claim about the mind: Biko argued that colonialism and apartheid had persuaded black South Africans of their own inferiority, so liberation had to begin with self-respect, pride and unity before it could be political."
+    "part": ""
   },
   {"type": "content", "tag": "", "html": "<div class=\"essaynote\"><div class=\"essaynote-label\">For an essay</div><h2>Remember this</h2><p>The movement's most distinctive work was psychological. Biko argued that apartheid had taught black South Africans to see themselves as inferior, so liberation had to begin in the mind.</p><p>That is the strongest point against the idea that the movement was only political. It is one of the points you will use when you build an essay.</p></div>"}
 ];
@@ -955,18 +957,7 @@ function renderSort(item){
 }
 
 // ============ RUNNING SUMMARY (own screen) ============
-function renderRunsum(item){
-  const parts = buildIds.filter(i=>i<=state.idx && state.revealed[i]).map(i=>FLOW[i].part);
-  const freshIdx = parts.length-1;
-  const lis = parts.map((p,i)=>`<li class="${i===freshIdx?"fresh":""}">${esc(p)}</li>`).join("");
-  stage.innerHTML = `
-    <div class="card">
-      <div class="stage-tag">${esc(item.tag||"Your running summary")}</div>
-      ${item.heading?`<h2>${esc(item.heading)}</h2>`:""}
-      ${item.html?item.html:""}
-      <div class="runsum"><div class="runsum-label">Your running summary</div><ol>${lis}</ol></div>
-    </div>`;
-}
+function renderRunsum(){ return; }
 
 // ============ POPUP after a build question ============
 function showBuildPop(part){ /* running-argument popup removed for essay-free standard */ return; }
@@ -1050,6 +1041,7 @@ function bindToggles(){
 
 // ============ RESULTS ============
 function showResults(){
+  kulaEmbed("completed");
   topBar.classList.add("hidden");
   nav.classList.add("hidden");
   let correct=0;
@@ -1086,19 +1078,13 @@ function showResults(){
     ${runsum}
     <div class="results-actions">
       <button class="btn-secondary" id="restart-btn">Restart lesson</button>
-      <button class="btn-primary" id="finish-btn">Finish</button>
+      <button class="btn-primary" id="finish-btn">Continue to Lesson 3&nbsp;&rarr;</button>
     </div>`;
   document.getElementById("restart-btn").addEventListener("click",()=>{
     state.idx=-1; state.answers={}; state.revealed={}; state.order={}; state.carRead={}; state.interState={}; state.poppedBuild={};
     renderCover();
   });
-  document.getElementById("finish-btn").addEventListener("click",()=>{
-    const back=document.createElement("div");
-    back.className="pop-back";
-    back.innerHTML=`<div class="pop"><div class="pop-label">Lesson complete</div><div class="pop-text">Tap Done to continue to Lesson 3, Building What the State Would Not.</div><button class="pop-btn" id="fin-ok">Done</button></div>`;
-    document.body.appendChild(back);
-    document.getElementById("fin-ok").addEventListener("click",()=>back.remove());
-  });
+  document.getElementById("finish-btn").onclick=()=>kulaEmbed("advance");
 }
 
 function isRight(i){
